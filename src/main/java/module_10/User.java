@@ -1,3 +1,5 @@
+package module_10;
+
 public class User {
     private String name;
     private int age;

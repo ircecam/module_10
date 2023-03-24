@@ -1,27 +1,13 @@
+package module_10;
+
 import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 public class WordsCounter {
-    private File file = null;
-    private String str = null;
-    private Map<String,Integer> countWord;
 
-    public WordsCounter(String pathname){
-        file = new File(pathname);
-        str = readFromFile(file);
-        countWord = countWords(str);
-
-    }
-    public WordsCounter(File file){
-        this.file = file;
-        str = readFromFile(this.file);
-        countWord = countWords(str);
-
-    }
-
-    private String readFromFile(File file) {
+    private static String readFromFile(File file) {
         StringBuilder s = new StringBuilder("");
         if (file.exists()) {
             try (FileReader fileReader = new FileReader(file)) {
@@ -38,11 +24,11 @@ public class WordsCounter {
         }
         return s.toString();
     }
-    private  String [] strToArrayOfString(String s){
+    private static String [] strToArrayOfString(String s){
         String [] words = s.split("\\s+");
         return words;
     }
-    private  Map<String, Integer> countWords(String s){
+    private static Map<String, Integer> countWords(String s){
         String [] words = strToArrayOfString(s);
 
         Map<String,Integer> countWord = new HashMap<>();
@@ -60,7 +46,7 @@ public class WordsCounter {
         return countWord;
     }
 
-    private String[] getKeys(Map<String,Integer> map,Integer value){
+    private static String[] getKeys(Map<String,Integer> map,Integer value){
         ArrayList<String> keys = new ArrayList<>(map.keySet());
         ArrayList<String>  newKeys = new ArrayList<>();
         for (String key:keys){
@@ -71,7 +57,7 @@ public class WordsCounter {
         return newKeys.toArray(new String[0]);
     }
 
-    private Integer [] sortedValues(Map<String,Integer> countWord){
+    private static Integer [] sortedValues(Map<String,Integer> countWord){
         Integer [] values = countWord.values().toArray(new Integer[0]);
         boolean isSorted = false;
         int temp;
@@ -90,7 +76,7 @@ public class WordsCounter {
         return values;
     }
 
-    private String sortedMap(Map<String,Integer> countWord){
+    private static String sortedMap(Map<String,Integer> countWord){
         StringBuilder res = new StringBuilder("");
 
         Integer [] sortedValues = sortedValues(countWord);
@@ -113,11 +99,10 @@ public class WordsCounter {
 
         return res.toString();
     }
-     public String getCountOfWords(){
-        return sortedMap(countWord);
+     public static String getCountOfWords(File file){
+         String str = readFromFile(file);
+         Map<String,Integer> countWord = countWords(str);
+         return sortedMap(countWord);
      }
-
-
-
 
 }

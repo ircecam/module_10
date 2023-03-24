@@ -1,19 +1,12 @@
+package module_10;
+
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.regex.Pattern;
 
 public class NumberValidator {
-    private File file;
-    private String [] validNumbers;
-
-
-    public NumberValidator(File file){
-        this.file = file;
-        validNumbers = readFromFile();
-    }
-
-    private String [] readFromFile(){
+    private static String [] readFromFile(File file){
         Collection <String> res = new ArrayList<>();
         if(file.exists()){
             try(FileReader fileReader = new FileReader(file)){
@@ -33,14 +26,15 @@ public class NumberValidator {
         return res.toArray(new String[0]);
     }
 
-    public boolean isNumberValid(String number){
+    public static boolean isNumberValid(String number){
         String regex1 = "\\d{3}\\-\\d{3}\\-\\d{4}";
         String regex2 = "\\(\\d{3}\\)\\s\\d{3}\\-\\d{4}";
         boolean res = Pattern.matches(regex1,number) || Pattern.matches(regex2,number);
         return res;
     }
 
-    public String getValidNumbers(){
+    public static String getValidNumbers(File file){
+        String [] validNumbers = readFromFile(file);
         StringBuilder res = new StringBuilder("");
         for(String number:validNumbers){
             res.append(number).append("\n");
